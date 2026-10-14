@@ -5,6 +5,7 @@
 
 import joblib
 from risk_engine import calculate_risk
+from scam_categories import detect_scam_categories
 
 
 # Load trained model and TF-IDF vectorizer
@@ -44,6 +45,10 @@ risk_result = calculate_risk(
     ml_probability
 )
 
+# Detect possible scam categories
+
+category_result = detect_scam_categories(message)
+
 
 # Display final result
 
@@ -56,6 +61,14 @@ print(f"ML Spam Probability: {ml_probability * 100:.2f}%")
 print(f"Risk Score: {risk_result['risk_score']}/100")
 
 print("Classification:", risk_result["classification"])
+
+print("\nScam Categories:")
+
+if category_result["categories"]:
+    for category in category_result["categories"]:
+        print("-", category)
+else:
+    print("No specific scam category detected.")
 
 
 print("\nSuspicious Indicators:")
